@@ -9,6 +9,9 @@
   justify-content: center;
   padding: 1rem 2.5rem;
   max-width: 800px;
+  font-size: 130%;
+  list-style-type: georgian;
+  color: var(--dark-gray);
 }
 .abstract-wrapper {
   /* border: 1px solid black; */

@@ -4,8 +4,8 @@ import "./abstract.css";
 function Abstract() {
   return (
     <div className="abstract-wrapper">
-      <div className="abstract">
-        <p>
+      <ul className="abstract">
+        <li>
           This <span className="highlight">password manager app</span> is
           designed to offer a <span className="highlight">secure</span> and
           centralized method for
@@ -16,9 +16,9 @@ function Abstract() {
           directly, the app securely saves a
           <span className="highlight"> hashed version</span> of it in the
           database.
-        </p>
+        </li>
 
-        <p>
+        <li>
           The hashing process ensures that the original password cannot be
           retrieved, as it uses a
           <span className="highlight"> hashing algorithm</span> to convert the
@@ -29,9 +29,9 @@ function Abstract() {
           Derivation Function 2), which creates a unique{" "}
           <span className="highlight"> encryption key</span> from the master
           password.
-        </p>
+        </li>
 
-        <p>
+        <li>
           This <span className="highlight"> derived key</span> is used to
           encrypt each password before storage, adding an extra layer of{" "}
           <span className="highlight"> security</span>. Each encryption includes
@@ -39,15 +39,15 @@ function Abstract() {
           resistance to brute-force attacks. To view stored passwords, the app
           requires the correct master password to regenerate the encryption key
           and securely decrypt the stored information.
-        </p>
+        </li>
 
-        <p>
+        <li>
           This setup delivers a <span className="highlight">reliable</span> and{" "}
           <span className="highlight">flexible </span>
           framework for securely managing encrypted passwords, making it both
           secure and user-friendly.
-        </p>
-      </div>{" "}
+        </li>
+      </ul>{" "}
     </div>
   );
 }
