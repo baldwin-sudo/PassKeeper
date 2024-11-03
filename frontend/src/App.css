@@ -1,0 +1,33 @@
+:root {
+  /* Primary Colors */
+  --primary-white: #ffffff;
+  --primary-gray: #eeeef7; /* Very light gray for backgrounds */
+  --secondary-gray: #4457b5; /* Light gray for borders and dividers */
+  --text-gray: #6c757d; /* Medium gray for text */
+  --dark-gray: #343a40; /* Dark gray for text or darker backgrounds */
+
+  /* Accent Colors */
+  --accent-blue: #363fa8; /* Optional for highlights or interactive elements */
+  --accent-green: #28a745; /* Success color for indicating status */
+
+  /* Shadows and Borders */
+  --border-gray: #dee2e6; /* Gray for subtle borders */
+  --shadow-gray: rgba(0, 0, 0, 0.1); /* Soft shadow */
+
+  /* Text */
+  --text-color: var(--text-gray);
+}
+
+body {
+  background-color: var(--primary-gray);
+  background-color: var(--secondary-gray);
+  background-color: rgb(226, 226, 239);
+  font-family: "Roboto", sans-serif;
+  /* font-size: 90%; */
+  margin: 0;
+  padding: 0;
+}
+input,
+textarea {
+  font-size: 1.1rem; /* or larger */
+}

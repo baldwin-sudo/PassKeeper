@@ -1,0 +1,44 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 3rem;
+}
+.searchBar-container {
+  box-shadow: 1px 1px 10px 10px rgba(154, 154, 154, 0.34);
+  position: relative; /* Needed for absolute positioning of the icon */
+  /* border: 1px solid blue; */
+  width: 16rem;
+  border-radius: 0.5rem;
+  overflow: hidden; /* Ensures that rounded corners are visible */
+}
+
+@media (min-width: 750px) {
+  .searchBar-container {
+    width: 25rem;
+  }
+}
+#search {
+  border: none; /* Removes the default input border */
+  padding: 10px 40px 10px 40px; /* Adequate padding for the icon */
+  border-radius: 0.5rem; /* Consistent border radius */
+  width: 100%; /* Takes full width of the container */
+  font-size: 1rem; /* Sets a readable font size */
+  outline: none; /* Removes the outline on focus */
+}
+
+#search:focus {
+  box-shadow: 0 0 5px rgba(0, 0, 255, 0.5); /* Optional: adds a subtle focus effect */
+}
+
+.search-icon {
+  height: 2rem;
+  width: 2rem;
+  position: absolute; /* Position the icon inside the input */
+  right: 10px; /* Position from the right */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for vertical centering */
+  cursor: pointer; /* Changes cursor to indicate it's clickable */
+  pointer-events: auto; /* Allow clicks on the icon */
+}

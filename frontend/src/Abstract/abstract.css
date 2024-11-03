@@ -1,0 +1,18 @@
+.highlight {
+  font-weight: bold;
+  color: var(--highlight-color);
+}
+.abstract {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem 2.5rem;
+  max-width: 800px;
+}
+.abstract-wrapper {
+  /* border: 1px solid black; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
