@@ -2,6 +2,7 @@ package api
 
 import (
 	"backend/db"
+	"net/http"
 
 	"github.com/gorilla/mux"
 )
@@ -13,6 +14,12 @@ func NewRouter(userService *db.UserServiceSql, passwordService *db.PasswordServi
 		UserService:     userService,
 		PasswordService: passwordService,
 	}
+
+	// Health check route
+	r.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	}).Methods("GET")
 
 	// User routes
 	r.HandleFunc("/users", services.createUser).Methods("POST")

@@ -1,0 +1,17 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"  # Assuming React runs on port 3000
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8080:8080"  # Assuming Go backend runs on port 8080
+    volumes:
+      - ./backend:/app  # Optional, maps local changes to container for development

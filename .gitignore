@@ -1,6 +1,8 @@
 *.md
-*.sql
+# *.sql
+*.db
 frontend/node_modules/*
 *.txt
-
+*.env
+*.pem
 database/*
