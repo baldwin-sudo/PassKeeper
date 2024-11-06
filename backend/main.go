@@ -35,7 +35,7 @@ func main() {
 	router := api.NewRouter(userService, passwordService)
 
 	// Start the server
-	port := ":8080" // Use any port you prefer
+	port := "0.0.0.0:8080" // Use any port you prefer
 	log.Printf("Starting server on %s...", port)
 	if err := http.ListenAndServe(port, router); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
