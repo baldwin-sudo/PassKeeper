@@ -1,0 +1,15 @@
+/* components/NotFound/NotFound.css */
+.not-found-container {
+  text-align: center;
+  margin-top: 50px;
+  color: var(--text-gray);
+}
+
+.not-found-container h2 {
+  color: var(--dark-gray);
+  font-size: 2rem;
+}
+
+.not-found-container p {
+  font-size: 1.2rem;
+}

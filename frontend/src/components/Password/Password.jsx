@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "./password.css";
 import show from "../../assets/show.png";
 import hide from "../../assets/hide.png";
+import update from "../../assets/update.png";
+import save from "../../assets/save.png";
+import delete_icon from "../../assets/delete.png";
 function Password({
   showInfo,
   website,
@@ -54,6 +57,9 @@ function Password({
           </div>
           <div className="hide-btn-container">
             <img src={hide} className="hide-btn pwd-btn" onClick={handleShow} />
+            <img src={update} className="hide-btn pwd-btn" alt="update" />
+            <img src={delete_icon} className="hide-btn pwd-btn" alt="del" />
+            <img src={save} className="hide-btn pwd-btn" alt="del" />
           </div>
         </div>
       )}
