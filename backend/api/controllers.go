@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
@@ -86,50 +85,68 @@ func (router *StorageServices) authenticateUser(w http.ResponseWriter, r *http.R
 
 	// Store user information in the session (only store the user ID or other non-sensitive information)
 	session.Values["master_password"] = user.MasterPassword // Save the username or any other info you'd like
-	session.Save(r, w)
+	session.Values["user_id"] = user.ID                     // Save the username or any other info you'd like
+	fmt.Println("Session values:", session.Values)
 	// If the password matches, respond with the user details (excluding sensitive information)
 	user, _ = models.NewUser(user.Username, user.MasterPassword)
+
 	// user.MasterPassword = "" // Make sure not to send sensitive data like the password
 	user.MasterPassword = "YOU CAN'T SEE THIS DATA"
+	session.Save(r, w)
+	fmt.Println("Session after save:", session.Values)
 
 	json.NewEncoder(w).Encode(user)
 }
 
 // Handler to create a new password entry
+// Handler to create a new password entry
 func (router *StorageServices) createPassword(w http.ResponseWriter, r *http.Request) {
-	// Retrieve the id from URL path parameters
-	userid := mux.Vars(r)["user_id"]
 	// Retrieve the session from the request
 	session, err := store.Get(r, "user-session")
-
 	if err != nil {
-		http.Error(w, "Couldnt access cookies ", http.StatusInternalServerError)
+		http.Error(w, "Couldn't access session", http.StatusInternalServerError)
 		return
 	}
-	var req_body struct {
+	fmt.Println("Session values:", session.Values)
+
+	// Retrieve the user ID from the session
+	userID, ok := session.Values["user_id"].(int)
+	if !ok {
+		http.Error(w, "User ID not found in session", http.StatusUnauthorized)
+		return
+	}
+
+	// Decode the request body
+	var reqBody struct {
 		Website       string `json:"website"`     // The website associated with the password
 		Description   string `json:"description"` // Optional description of the password entry
 		Email         string `json:"email"`       // Email associated with the account
 		Username      string `json:"username"`    // Username for the account
 		PlainPassword string `json:"plain_password"`
 	}
-	if err := json.NewDecoder(r.Body).Decode(&req_body); err != nil {
+
+	if err := json.NewDecoder(r.Body).Decode(&reqBody); err != nil {
 		http.Error(w, "Invalid input", http.StatusBadRequest)
 		return
 	}
-	userid_int, _ := strconv.Atoi(userid)
-	user, _ := router.UserService.GetById(userid_int)
-	// Check if the username is stored in the session
-	master_password, _ := session.Values["master_password"].(string)
-	user.MasterPassword = master_password
-	password := models.NewPassword(req_body.Website, req_body.Website, req_body.Email, req_body.Username, req_body.PlainPassword, 0, *user)
 
-	// Use the PasswordService to create the password
+	// Get the user from the database using the user ID from the session
+	user, err := router.UserService.GetById(userID)
+	if err != nil {
+		http.Error(w, "User not found", http.StatusNotFound)
+		return
+	}
+
+	// Create a new password entry using the data from the request body and the user object
+	password := models.NewPassword(reqBody.Website, reqBody.Description, reqBody.Email, reqBody.Username, reqBody.PlainPassword, 0, *user)
+
+	// Use the PasswordService to create the password entry
 	if err := router.PasswordService.Create(password); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	// Respond with the created password entry
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(password)
 }

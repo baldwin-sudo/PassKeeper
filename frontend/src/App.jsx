@@ -4,6 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { ApiProvider } from "./components/ApiProvider/ApiProvider";
 import { useEffect, useState } from "react";
 import PasswordList from "./components/PasswordList/PasswordList";
 import PasswordForm from "./components/PasswordForm/PasswordForm";
@@ -31,57 +32,62 @@ function App() {
     localStorage.setItem("isLoggedIn", "false"); // Update local storage
   };
 
-  const loginUser = () => {
+  const loginUser = (username) => {
     setIsLoggedIn(true);
+    localStorage.setItem("username", username); // Update local storage
     localStorage.setItem("isLoggedIn", "true"); // Update local storage
   };
 
   return (
-    <Router>
-      <Header logoutUser={logoutUser} isLoggedIn={isLoggedIn} />
+    <ApiProvider>
+      <Router>
+        <Header logoutUser={logoutUser} isLoggedIn={isLoggedIn} />
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            isLoggedIn ? (
-              <>
-                <Search />
-                <PasswordList passwordList={passwordList} />
-              </>
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route
-          path="/add"
-          element={
-            isLoggedIn ? (
-              <PasswordForm setPasswordList={setPasswordList} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-        <Route
-          path="/abstract"
-          element={isLoggedIn ? <Abstract /> : <Navigate to="/login" replace />}
-        />
-        <Route
-          path="/login"
-          element={
-            isLoggedIn ? (
-              <Navigate to="/" replace />
-            ) : (
-              <Login onLogin={loginUser} />
-            )
-          }
-        />
-        <Route path="*" element={<NotFound isLoggedIn={isLoggedIn} />} />
-      </Routes>
-      <Footer />
-    </Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              isLoggedIn ? (
+                <>
+                  <Search />
+                  <PasswordList passwordList={passwordList} />
+                </>
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/add"
+            element={
+              isLoggedIn ? (
+                <PasswordForm setPasswordList={setPasswordList} />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
+          <Route
+            path="/abstract"
+            element={
+              isLoggedIn ? <Abstract /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              isLoggedIn ? (
+                <Navigate to="/" replace />
+              ) : (
+                <Login onLogin={loginUser} />
+              )
+            }
+          />
+          <Route path="*" element={<NotFound isLoggedIn={isLoggedIn} />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </ApiProvider>
   );
 }
 

@@ -4,10 +4,11 @@ import (
 	"backend/db"
 	"net/http"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
-func NewRouter(userService *db.UserServiceSql, passwordService *db.PasswordServiceSql) *mux.Router {
+func NewRouter(userService *db.UserServiceSql, passwordService *db.PasswordServiceSql) http.Handler {
 	r := mux.NewRouter()
 
 	services := &StorageServices{
@@ -23,13 +24,21 @@ func NewRouter(userService *db.UserServiceSql, passwordService *db.PasswordServi
 
 	// User routes
 	r.HandleFunc("/users", services.createUser).Methods("POST")
-	r.HandleFunc("/users/{username}", services.authenticateUser).Methods("POST")
+	r.HandleFunc("/login/{username}", services.authenticateUser).Methods("POST")
 
 	// Password routes
-	r.HandleFunc("/passwords/{user_id}", services.createPassword).Methods("POST")
+	r.HandleFunc("/passwords/create", services.createPassword).Methods("POST")
+	//TODO MODIFY : REMOVE
 	r.HandleFunc("/passwords/{user_id}", services.getAllPasswords).Methods("GET")
 	r.HandleFunc("/passwords/{user_id}/{password_id}", services.updatePassword).Methods("PUT")
 	r.HandleFunc("/passwords/{user_id}/{password_id}", services.deletePassword).Methods("DELETE")
 
-	return r
+	// Wrap the router with CORS to allow requests from any origin
+	corsRouter := handlers.CORS(
+		handlers.AllowedOrigins([]string{"http://localhost:3000"}), // Add frontend origin here
+		handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}),
+		handlers.AllowedHeaders([]string{"Content-Type", "Authorization"}),
+	)(r)
+
+	return corsRouter
 }

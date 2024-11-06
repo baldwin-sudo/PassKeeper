@@ -5,13 +5,15 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.frontend
     ports:
-      - "3000:3000"  # Assuming React runs on port 3000
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_HOST=http://backend:8080  # Docker container reference
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile.backend
     ports:
-      - "8080:8080"  # Assuming Go backend runs on port 8080
+      - "8080:8080"
     volumes:
       - ./backend:/app  # Optional, maps local changes to container for development
