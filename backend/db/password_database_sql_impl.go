@@ -58,7 +58,7 @@ func (ps *PasswordServiceSql) Delete(id int) error {
 
 // GetAllByUserID retrieves all password entries for a specific user
 func (ps *PasswordServiceSql) GetAllByUserID(user models.User) ([]*models.Password, error) {
-	query := "SELECT id, website, description, email, username, password, access_count, created_at, updated_at FROM passwords WHERE user_id = ?"
+	query := "SELECT id, website, description, email, username, password, access_count, created_at, updated_at ,user_id FROM passwords WHERE user_id = ?"
 	rows, err := ps.dataSource.Query(query, user.ID)
 	if err != nil {
 		return nil, err

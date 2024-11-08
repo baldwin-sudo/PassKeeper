@@ -13,6 +13,7 @@ function Password({
   username,
   password,
   handleShow,
+  handleDelete,
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => {
@@ -58,7 +59,12 @@ function Password({
           <div className="hide-btn-container">
             <img src={hide} className="hide-btn pwd-btn" onClick={handleShow} />
             <img src={update} className="hide-btn pwd-btn" alt="update" />
-            <img src={delete_icon} className="hide-btn pwd-btn" alt="del" />
+            <img
+              onClick={handleDelete}
+              src={delete_icon}
+              className="hide-btn pwd-btn"
+              alt="del"
+            />
             <img src={save} className="hide-btn pwd-btn" alt="del" />
           </div>
         </div>

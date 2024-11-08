@@ -50,7 +50,7 @@ function App() {
               isLoggedIn ? (
                 <>
                   <Search />
-                  <PasswordList passwordList={passwordList} />
+                  <PasswordList />
                 </>
               ) : (
                 <Navigate to="/login" replace />

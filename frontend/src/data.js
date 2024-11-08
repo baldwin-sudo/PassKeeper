@@ -1,6 +1,6 @@
 // sampleData.js
-
-export const users = [
+export const users = [];
+export const users1 = [
   {
     id: 1,
     username: "johndoe",
@@ -19,7 +19,8 @@ export const users = [
   },
 ];
 
-export const passwords = [
+export const passwords = [];
+export const passwords1 = [
   {
     id: 1,
     website: "example.com",

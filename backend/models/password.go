@@ -8,17 +8,17 @@ const NUM_ITER int = 32
 
 // Password represents a password entry in the database
 type Password struct {
-	ID                int       `json:"-"`           // Unique identifier for the password
+	ID                int       `json:"password_id"` // Unique identifier for the password
 	Website           string    `json:"website"`     // The website associated with the password
 	Description       string    `json:"description"` // Optional description of the password entry
 	Email             string    `json:"email"`       // Email associated with the account
 	Username          string    `json:"username"`    // Username for the account
 	PlainPassword     string    `json:"plain_password"`
-	EncryptedPassword string    `json:"-"`            // Encrypted password
+	EncryptedPassword string    // Encrypted password
 	AccessCount       int       `json:"access_count"` // Number of times the password has been accessed
-	CreatedAt         time.Time `json:"-"`            // Timestamp when the password entry was created
-	UpdatedAt         time.Time `json:"-"`            // Timestamp when the password entry was last updated
-	UserID            int       `json:"user_id"`      // Foreign key reference to the user who owns the password
+	CreatedAt         time.Time // Timestamp when the password entry was created
+	UpdatedAt         time.Time // Timestamp when the password entry was last updated
+	UserID            int       // Foreign key reference to the user who owns the password
 }
 
 // NewPassword creates a new Password instance with the provided values.

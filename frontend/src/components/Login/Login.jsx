@@ -17,6 +17,7 @@ function Login({ onLogin }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ master_password: password }),
+        credentials: "include",
       });
 
       if (response.ok) {

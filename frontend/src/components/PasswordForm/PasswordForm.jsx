@@ -35,6 +35,7 @@ function PasswordForm({ setPasswordList }) {
           username: username, // Correctly reference the state values
           plain_password: password, // Correctly reference the state values
         }),
+        credentials: "include",
       });
 
       const data = await response.json();
